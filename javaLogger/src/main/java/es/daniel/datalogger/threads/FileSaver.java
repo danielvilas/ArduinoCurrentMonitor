@@ -26,7 +26,7 @@ public class FileSaver implements Runnable {
         FileOutputStream fos = null;
         try {
             String name="data-";
-            SimpleDateFormat dt = new SimpleDateFormat("yyyyymmdd-HHmmss");
+            SimpleDateFormat dt = new SimpleDateFormat("yyyyMMdd-HHmmss");
             name+=dt.format(new Date());
             fos = new FileOutputStream(name+".csv");
             while (true) {

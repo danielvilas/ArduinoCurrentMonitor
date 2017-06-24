@@ -39,7 +39,7 @@ public class LogData {
     @Override
     public String toString() {
         if(this.type==DataType.Data) {
-            return "(" + bytesToHex(rawData,0,4) + ", " + A0 + ", " + A1+ ", " +date+ ", "+deltaMicros + ")";
+            return "(" + Long.toString(micros,16) + ", " + A0 + ", " + A1+ ", " +date+ ", "+deltaMicros + ")";
         }else //if(type==DataType.Sync)
             {
             return "Sync";
@@ -49,9 +49,9 @@ public class LogData {
     public String toCsvString(){
         if(this.type==DataType.Data) {
             if(date==null){
-                return bytesToHex(rawData,0,4) + ", " + A0 + ", " + A1+ ", 0, 0";
+                return Long.toString(micros,16) + ", " + A0 + ", " + A1+ ", 0, 0";
             }
-            return bytesToHex(rawData,0,4) + ", " + A0 + ", " + A1+ ", " +date.getTime()+ ", "+deltaMicros;
+            return Long.toString(micros,16) + ", " + A0 + ", " + A1+ ", " +date.getTime()+ ", "+deltaMicros;
         }
         return "";
     }
@@ -92,14 +92,4 @@ public class LogData {
             deltaMicros=delta;
     }
 
-    private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
-    public static String bytesToHex(byte[] bytes, int offset, int size) {
-        char[] hexChars = new char[size * 2];
-        for ( int j = 0; j < size; j++ ) {
-            int v = bytes[offset+j] & 0xFF;
-            hexChars[j * 2] = hexArray[v >>> 4];
-            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-        }
-        return new String(hexChars);
-    }
 }

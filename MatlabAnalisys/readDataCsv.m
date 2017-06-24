@@ -5,7 +5,7 @@ fid = fopen(inputFile);
 tline = fgetl(fid);
 i =0;
 data=[];
-packs=[]
+packs=[];
 while ischar(tline) % && i<1025
     if startsWith(tline,'#')
         disp(tline);
