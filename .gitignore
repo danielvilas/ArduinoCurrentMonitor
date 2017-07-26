@@ -24,3 +24,5 @@ hs_err_pid*
 javaLogger/\.idea/
 javaLogger/target/
 *.iml
+
+*.csv

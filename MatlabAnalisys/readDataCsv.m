@@ -23,7 +23,15 @@ while ischar(tline) % && i<1025
         time=C{4};
         delta = C{5};
         %disp(([time, delta, a0, a1, hex2num(micros)]));
-        data= [data ; ([time, delta, a0, a1, hex2num(micros)])];
+        if startsWith(micros,'-')
+            %disp(micros);
+            m=hex2num(micros{1}(2:end));
+            data= [data ; ([time, delta, a0, a1, m])];
+        else
+            %disp(micros);
+            data= [data ; ([time, delta, a0, a1, hex2num(micros)])];
+        end
+        
     end
     tline = fgetl(fid);
     i=i+1;

@@ -24,7 +24,7 @@ public class WindowAnalisys implements Runnable {
         int i=0;
         try {
             while (true) {
-                i=(1+i)%60;
+                i=(1+i)%30;
                 packet = inData.pull();
                 fillMaxMinData(packet, packet.getA0Data(), packet.getA1Data());
                 fillPeaks(packet, packet.getA0Data(), packet.getA1Data());

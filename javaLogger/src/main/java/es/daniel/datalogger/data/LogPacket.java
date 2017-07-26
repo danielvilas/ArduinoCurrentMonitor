@@ -31,10 +31,18 @@ public class LogPacket{
 
     public String toCsv() {
         StringBuffer sb = new StringBuffer();
-        sb.append("#(" + getA0Data() + ", " + getA1Data() + ")").append('\n');
+        sb.append(toString()).append('\n');
         for(int i=0;i<PACKET_SIZE;i++){
             sb.append(data[i].toCsvString()).append('\n');
         }
         return sb.toString();
     }
+
+    public String toString() {
+        if(data[0]!=null){
+            return "#(" + getA0Data() + ", " + getA1Data() +", "+data[0].getDate()+ ")";
+        }
+        return "#(" + getA0Data() + ", " + getA1Data() + ")";
+    }
+
 }

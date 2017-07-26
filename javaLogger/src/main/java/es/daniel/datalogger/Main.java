@@ -21,7 +21,12 @@ public class Main {
     public static void main(String args[]){
 
         SerialPort port = null;
-        while(port==null)port=choosePort();
+
+        if(args.length==1){
+            port= choosePort(args[0]);
+        }
+
+        while(port==null)port=choosePort(null);
 
         System.out.println("Port Choosed: "+port.getSystemPortName());
         port.setBaudRate(115200);
@@ -46,12 +51,14 @@ public class Main {
         t.start();
 ;    }
 
-    private static SerialPort choosePort(){
+    private static SerialPort choosePort(String sel){
         System.out.println("Choose port");
         SerialPort[] ports = SerialPort.getCommPorts();
         for(int i=0;i<ports.length;i++){
             SerialPort s = ports[i];
             System.out.println("  "+i+": "+s.getSystemPortName());
+            if(sel!=null && sel.equals(s.getSystemPortName()) )
+                return s;
         }
         try{
             int i = Integer.parseInt(br.readLine());

@@ -27,6 +27,9 @@
 
  */
 
+//Periodo en NS
+#define PERIOD 1000
+#define OVERFLOW_LIMIT 0xFFFFFFFF - PERIOD
 const int sensorPin = A0;    // select the input pin for the potentiometer    // select the pin for the LED
 unsigned int sensorValue0 = 0;  // variable to store the value coming from the sensor
 unsigned int sensorValue1 = 0; 
@@ -39,7 +42,7 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
-  next = micros()+1000;
+  next = micros()+PERIOD;
   memset(buff,0xFF,sizeof(buff));
   Serial.write(buff,sizeof(buff));
 }
@@ -52,13 +55,13 @@ unsigned int a1;
 int cnt=0;
 void loop() {
       unsigned long t0=micros();
-      while(t0<next){
+      while(t0<next||(next<=PERIOD && t0>=OVERFLOW_LIMIT)){
         t0=micros();
       }
       // read the value from the sensor:
       a0 = analogRead(sensorPin);
       a1 = analogRead(A1);
-      next=next+1000;
+      next=next+PERIOD;
       
       //Serial.print(sensorValue0);
       //Serial.print(" ");

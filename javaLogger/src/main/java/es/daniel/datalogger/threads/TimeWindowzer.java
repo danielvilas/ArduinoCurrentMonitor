@@ -25,6 +25,7 @@ public class TimeWindowzer implements Runnable {
         long baseMicros = -1;
         long previousMicros = 0;
         LogPacket packet = null;
+        int overflow=0;
         try {
             while (true) {
                 LogData data = inData.pull();
@@ -37,6 +38,12 @@ public class TimeWindowzer implements Runnable {
                     if (baseDate == null) {
                         baseDate = new Date();
                         baseMicros = data.getMicros();
+                    }
+                    data.overFlowMicros(overflow);
+                    if(data.getMicros()<previousMicros){
+                        System.out.println("\tOverflow detected");
+                        data.overFlowMicros(1);
+                        overflow++;
                     }
                     Date currDate = new Date();
                     currDate.setTime(baseDate.getTime() + (data.getMicros() - baseMicros) / 1000);
