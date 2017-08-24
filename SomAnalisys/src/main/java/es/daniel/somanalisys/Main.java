@@ -15,6 +15,7 @@ import org.jtransforms.fft.DoubleFFT_1D;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class Main extends JFrame implements  Runnable{
     private NeighborhoodRBF gaussian;
 
     public Main() {
-        this.setSize(640, 480);
+        this.setSize((MapPanel.WIDTH*2+3)*MapPanel.CELL_SIZE, (MapPanel.HEIGHT+1)*MapPanel.CELL_SIZE);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.network = createNetwork();
         this.getContentPane().add(map = new MapPanel(this.getNetwork()));
@@ -51,9 +52,39 @@ public class Main extends JFrame implements  Runnable{
     }
 
     private SOM createNetwork() {
-        SOM result = new SOM(3,MapPanel.WIDTH * MapPanel.HEIGHT);
+        SOM result = new SOM(6,MapPanel.WIDTH * MapPanel.HEIGHT);
         result.reset();
         return result;
+    }
+
+    private int getState(Date tmp){
+        int h = tmp.getHours();
+        int m= tmp.getMinutes();
+
+        int MARGIN =1;
+        int SIZE = 2;
+
+        if(h==15){
+            if(m>=36+MARGIN && m<=36+MARGIN+SIZE){
+                return 3; // TV + BluRay
+            }
+        }else if(h==17){
+            if(m>=21+MARGIN && m<=21+MARGIN+SIZE){
+                return 4; // TV + IpTV
+            }
+            if(m>=40+MARGIN && m<=40+MARGIN+SIZE){
+                return 5; // OFF
+            }
+        }else if(h==18) {
+            if (m >= 40 + MARGIN && m <= 40 + MARGIN + SIZE) {
+                return 4; // TV + IpTV
+            }
+        }else if(h==19) {
+            if (m >= 0 + MARGIN && m <= 0 + MARGIN + SIZE) {
+                return 5; // OFF
+            }
+        }
+        return -1;
     }
 
     public MLDataSet readData(String file, MLDataSet in) throws Exception {
@@ -67,6 +98,9 @@ public class Main extends JFrame implements  Runnable{
         DataReader dt = new DataReader(file);
         List<LogPacket> list= dt.readFile();
         for(LogPacket lp : list) {
+            Date tmp = lp.getData(0).getDate();
+            int  state= getState(tmp);
+            if(state == -1) continue;
             double dData[] = new double[1000];
             for (int j = 0; j < 1000; j++) {
                 LogData lg = lp.getData(j);
@@ -77,14 +111,16 @@ public class Main extends JFrame implements  Runnable{
             System.arraycopy(dData, 0, fft, 0, dData.length);
             DoubleFFT_1D fftDo = new DoubleFFT_1D(dData.length);
             fftDo.realForwardFull(fft);
-            BasicMLData data = new BasicMLData(3);
+            BasicMLData data = new BasicMLData(6);
             data.setData(0, getMagnitude(fft,50)/30.0);
             data.setData(1, getMagnitude(fft,150)/30.0);
             data.setData(2, getMagnitude(fft,250)/30.0);
+            data.setData(3, -1.0);
+            data.setData(4, -1.0);
+            data.setData(5, -1.0);
+            data.setData(state,1.0);
             ret.add(data);
         }
-
-
 
         return ret;
     }
@@ -99,8 +135,8 @@ public class Main extends JFrame implements  Runnable{
     public void run() {
         MLDataSet data;
         try {
-            data = readData("data-20170716-16.csv",null);
-            data = readData("data-20170716-15.csv",data);
+            data = readData("data-20170716-15.csv",null);
+            data = readData("data-20170716-16.csv",data);
             data = readData("data-20170716-17.csv",data);
             data = readData("data-20170716-18.csv",data);
             data = readData("data-20170716-19.csv",data);
