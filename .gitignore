@@ -28,3 +28,5 @@ javaLogger/target/
 *.csv
 
 SomAnalisys/\.idea/
+
+\.idea/
