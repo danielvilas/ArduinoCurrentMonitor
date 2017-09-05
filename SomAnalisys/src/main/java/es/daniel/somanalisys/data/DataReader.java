@@ -1,4 +1,4 @@
-package es.daniel.somanalisys;
+package es.daniel.somanalisys.data;
 
 import es.daniel.datalogger.data.LogData;
 import es.daniel.datalogger.data.LogPacket;
