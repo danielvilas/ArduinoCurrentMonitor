@@ -1,4 +1,4 @@
-package es.daniel.somanalisys.data;
+package es.daniel.fann.data;
 
 import java.util.Date;
 

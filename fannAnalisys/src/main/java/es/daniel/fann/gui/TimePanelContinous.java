@@ -1,9 +1,9 @@
 package es.daniel.fann.gui;
 
 import es.daniel.fann.data.Appliance;
-import es.daniel.fann.model.ModelManager;
 import es.daniel.fann.data.CustomMLDataPair;
 import es.daniel.fann.data.DataManager;
+import es.daniel.fann.model.ModelManager;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.MLDataPair;
 
@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
 
-public class TimePanel extends JPanel {
+public class TimePanelContinous extends JPanel {
 
     public static final int CELL_HEIGH = 10;
     public static final int CELL_WIDTH = 1;
@@ -26,15 +26,17 @@ public class TimePanel extends JPanel {
     ModelManager modelMgr;
     Color[] outColors;
 
-    public TimePanel(DataManager dataMgr, ModelManager modelMgr) {
+    public TimePanelContinous(DataManager dataMgr, ModelManager modelMgr) {
         this.dataMgr=dataMgr;
         this.modelMgr=modelMgr;
-        this.setSize(60*60*TimePanel.CELL_WIDTH+20, TimePanel.CELL_HEIGH+120);
+        this.setSize(60*60* TimePanelContinous.CELL_WIDTH+20, TimePanelContinous.CELL_HEIGH+120);
         this.setPreferredSize(getSize());
         outColors=new Color[Appliance.values().length];
         for(Appliance app:Appliance.values()){
             outColors[app.getPosition()]=app.getColor();
         }
+        this.setDoubleBuffered(true);
+        this.setIgnoreRepaint(true);
     }
 
     private int convertColor(double d)
@@ -52,51 +54,47 @@ public class TimePanel extends JPanel {
 
     @Override
     public void paint(Graphics g) {
-        MLDataPair[][] toPaint= new MLDataPair[60*60][6];
-        double[][][] result= new double[60*60][6][];
+        int x=0;
         for (MLDataPair mlDataPair:dataMgr.getAllData()) {
             MLData mlData = mlDataPair.getInput();
 
+            double calcResult[]=modelMgr.execute(mlData);
 
-            Date date = null;
-            /*if(mlData instanceof CustomMLData ) {
-                CustomMLData customMLData = (CustomMLData) mlData;
-                date = customMLData.getDate();
-            }else */if(mlDataPair instanceof CustomMLDataPair){
-                CustomMLDataPair customMLData = (CustomMLDataPair) mlDataPair;
-                date = customMLData.getDate();
+            double data[] = mlData.getData();
+            double out[]=(mlDataPair.getIdeal()!=null)?mlDataPair.getIdeal().getData():null;
+            //Paint InData
+            setColor(g, data[0] / I0_DIV, data[1] / I1_DIV, data[2] / I2_DIV);
+            g.fillRect(x*CELL_WIDTH, getY(0,0), CELL_WIDTH, CELL_HEIGH);
+
+            //Paint general Data
+            setColorData(g, out);
+            g.fillRect(x*CELL_WIDTH, getY(1, 0), CELL_WIDTH, CELL_HEIGH);
+            setColorData(g,calcResult);
+            g.fillRect(x*CELL_WIDTH, getY(2, 0), CELL_WIDTH, CELL_HEIGH);
+
+            for(int i=0;i<outColors.length;i++){
+                setColor(g,outColors[i],out[i]);
+                g.fillRect(x*CELL_WIDTH, getY(i*2, 1), CELL_WIDTH, CELL_HEIGH);
+                setColor(g,outColors[i],calcResult[i]);
+                g.fillRect(x*CELL_WIDTH, getY(i*2+1, 1), CELL_WIDTH, CELL_HEIGH);
             }
-            int hour=date.getHours();
-            hour -= 15;
-            //double data[] = mlData.getData();
-            int x = getX(date);
-            toPaint[x][hour]=mlDataPair;
-            result[x][hour] =modelMgr.execute(mlData);
+
+            x++;
         }
-        MLDataPair last=null;
-        double lastResult[]=null;
+        this.setSize(x*CELL_WIDTH, TimePanelContinous.CELL_HEIGH+120);
+        this.setPreferredSize(getSize());
+    }
 
-        for(int y = 0;y<6;y++) {
-            for(int x=0;x<60*60;x++){
-                //if(toPaint[x][y]==null)continue;
-                if(toPaint[x][y]==null && last==null)continue;
-                if(toPaint[x][y]!=null){
-                    last=toPaint[x][y];
-                    lastResult=result[x][y];
-                }
-                double data[] = last.getInput().getData();
-                setColor(g, data[0] / I0_DIV, data[1] / I1_DIV, data[2] / I2_DIV);
-                g.fillRect(x, getY(0, y), CELL_WIDTH, CELL_HEIGH);
+    private void setColor(Graphics g, Color outColor, double v) {
+        double dRed=v*outColor.getRed();
+        double dGreen=v*outColor.getGreen();
+        double dBlue=v*outColor.getBlue();
 
-                double out[]=(last.getIdeal()!=null)?last.getIdeal().getData():null;
-                setColorData(g, out);
-                g.fillRect(x, getY(1, y), CELL_WIDTH, CELL_HEIGH);
+        int iRed=fixColor((int)dRed);
+        int iGreen=fixColor((int)dGreen);
+        int iBlue=fixColor((int)dBlue);
 
-                setColorData(g,lastResult);
-                g.fillRect(x, getY(2, y), CELL_WIDTH, CELL_HEIGH);
-
-            }
-        }
+        g.setColor(new Color(iRed,iGreen,iBlue));
     }
 
     private int getX(Date date){

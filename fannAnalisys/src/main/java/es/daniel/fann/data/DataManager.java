@@ -1,5 +1,6 @@
-package es.daniel.somanalisys.data;
+package es.daniel.fann.data;
 
+import es.daniel.datalogger.data.DataReader;
 import es.daniel.datalogger.data.LogData;
 import es.daniel.datalogger.data.LogPacket;
 import org.encog.ml.data.MLDataPair;
@@ -13,11 +14,6 @@ import java.util.Date;
 import java.util.List;
 
 public abstract class DataManager<DataType> {
-
-    public static final double[] YELLOW={1.0,1.0,0.0};
-    public static final double[] RED={1.0,0.0,0.0};
-    public static final double[] GREEN={0.0,1.0,0.0};
-    public static final double[] BLUE={0.0,0.0,1.0};
 
     public static final int TIME_MARGIN =1;
     public static final int TIME_SIZE = 2;
@@ -38,27 +34,58 @@ public abstract class DataManager<DataType> {
         for(LogPacket lp : list) {
             Date tmp = lp.getData(0).getDate();
             TimeClasifier stateType= getState(tmp);
-            double dData[] = new double[1000];
-            for (int j = 0; j < 1000; j++) {
-                LogData lg = lp.getData(j);
-                dData[j]=(lg.getA0() - 512.0) /512.0;
+
+            /*if(stateType!=null && !stateType.isTest()){
+                for(int i=0;i<1023-300;i++){
+                    createData(file, lp, tmp, stateType,i);//all possibles
+                }
+            }else*/{
+                //Test or run
+                //TODO adjust
+                createData(file, lp, tmp, stateType,0);//[0,300)
+                createData(file, lp, tmp, stateType,300);//[300,600)
+                createData(file, lp, tmp, stateType,600);//[600,900)
+                createData(file, lp, tmp, stateType,1023-300);//[724,1024)
             }
 
-            double[] fft = new double[dData.length * 2];
-            System.arraycopy(dData, 0, fft, 0, dData.length);
-            DoubleFFT_1D fftDo = new DoubleFFT_1D(dData.length);
-            fftDo.realForwardFull(fft);
-            //BasicMLData data = new BasicMLData(3);
-            double in[]=new double[]{getMagnitude(fft,50),getMagnitude(fft,150),getMagnitude(fft,250)};
-            DataType data = buildData(in,stateType,file,tmp);
-            if(data instanceof BasicMLData){
-                fillDataSet((BasicMLData) data,stateType);
-            }else if(data instanceof BasicMLDataPair){
-                fillDataSet((BasicMLDataPair) data,stateType);
-            }
         }
 
     }
+
+    private void createData(String file, LogPacket lp, Date tmp, TimeClasifier stateType,int offset) {
+        double[] in = getFftData(lp,offset);
+        DataType data = buildData(in,stateType,file,tmp);
+        fillData(stateType, data);
+    }
+
+    private double[] getFftData(LogPacket lp, int offset) {
+        double dData[] = new double[300];
+        double average =0.0;
+        for (int j = 0; j < 300; j++) {
+            LogData lg = lp.getData(j+offset);
+            double tmp=(lg.getA0() - 512.0) /512.0;
+            dData[j]=tmp;
+            tmp=Math.abs(tmp);
+            average+=tmp;
+        }
+        average/=dData.length;
+
+        double[] fft = new double[dData.length * 2];
+        System.arraycopy(dData, 0, fft, 0, dData.length);
+        DoubleFFT_1D fftDo = new DoubleFFT_1D(dData.length);
+        fftDo.realForwardFull(fft);
+        //BasicMLData data = new BasicMLData(3);
+        return new double[]{getMagnitude(fft,50),getMagnitude(fft,150),getMagnitude(fft,250),getMagnitude(fft,350),average};
+    }
+
+    private void fillData(TimeClasifier stateType, DataType data) {
+        if(data instanceof BasicMLData){
+            fillDataSet((BasicMLData) data,stateType);
+        }else if(data instanceof BasicMLDataPair){
+            fillDataSet((BasicMLDataPair) data,stateType);
+        }
+    }
+
 
     private void fillDataSet(BasicMLData data, TimeClasifier stateType){
         if(stateType !=null) {
@@ -86,8 +113,13 @@ public abstract class DataManager<DataType> {
     protected abstract DataType buildData(double[] in, TimeClasifier type, String file, Date time);
 
     public double getMagnitude(double[] fft, int i){
-        double re = fft[2*i];
-        double im = fft[2*i+1];
+        /**
+         * h = P*fs/N
+         * P = h/ (FS/N) = h*N/FS
+         */
+        int pos = i*(fft.length/2)/1000;
+        double re = fft[2*pos];
+        double im = fft[2*pos+1];
         return  Math.sqrt(re*re+im*im);
     }
 

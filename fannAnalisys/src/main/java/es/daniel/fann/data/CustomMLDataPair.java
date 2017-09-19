@@ -1,4 +1,4 @@
-package es.daniel.somanalisys.data;
+package es.daniel.fann.data;
 
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLDataPair;
