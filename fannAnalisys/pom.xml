@@ -2,18 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>Paper1</artifactId>
+        <groupId>es.daniel</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>es.daniel</groupId>
-    <artifactId>Paper1</artifactId>
-    <version>1.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	
-	<modules>
-		<module>fannj</module>
-		<module>javaLogger</module>
-		<module>SomAnalisys</module>
-		<module>fannAnalisys</module>
-	</modules>
-    
+    <artifactId>fannAnalisys</artifactId>
+
+
 </project>

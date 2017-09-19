@@ -11,7 +11,7 @@ public abstract class ModelManager<NetWork, DataMgr extends  DataManager> {
 
     private NetWork network;
     private BasicTraining train;
-    private ModelManagerListener cb;
+    protected ModelManagerListener cb;
 
     public ModelManager(){
     }

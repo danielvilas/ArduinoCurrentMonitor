@@ -5,11 +5,13 @@ import com.googlecode.fannj.Fann;
 import com.googlecode.fannj.Layer;
 import com.googlecode.fannj.Trainer;
 import es.daniel.somanalisys.Model.BasicModelManager;
+import es.daniel.somanalisys.Model.FannModelManager;
 import es.daniel.somanalisys.Model.SomModelManager;
 import es.daniel.somanalisys.data.PairDataManager;
 import es.daniel.somanalisys.data.SomDataManager;
 import es.daniel.somanalisys.gui.BasicAnalisysFrame;
 import es.daniel.somanalisys.gui.BasicTimeLineFrame;
+import es.daniel.somanalisys.gui.FannTimeLineFrame;
 import es.daniel.somanalisys.gui.MlpTimeLineFrame;
 import org.apache.commons.io.IOUtils;
 import org.encog.ml.data.MLDataPair;
@@ -33,8 +35,9 @@ public class Main{
 
     public static void main(String args[]) throws Exception{
         //BasicAnalisysFrame frame = new BasicAnalisysFrame();
-        BasicTimeLineFrame frame = new BasicTimeLineFrame();
+        //BasicTimeLineFrame frame = new BasicTimeLineFrame();
         //MlpTimeLineFrame frame = new  MlpTimeLineFrame();
+        FannTimeLineFrame frame = new FannTimeLineFrame();
         frame.setVisible(true);
         //run();
         //runFann();
@@ -110,7 +113,7 @@ public class Main{
 
     private static void run(){
         PairDataManager dataMgr=new PairDataManager();
-        BasicModelManager modelMgr=new BasicModelManager();
+        FannModelManager modelMgr=new FannModelManager();
         modelMgr.setDataMgr(dataMgr);
 
         try {
@@ -126,7 +129,7 @@ public class Main{
         }
 
         dataMgr.printMaxTrainData();
-        modelMgr.train(0.01,Integer.MAX_VALUE);
+        modelMgr.train(0.01,50*1000);
         BasicMLDataPair tmp= (BasicMLDataPair) dataMgr.getTrainData().get(0);
         double[] ret = modelMgr.execute(tmp.getInput());
         System.out.println(ret);

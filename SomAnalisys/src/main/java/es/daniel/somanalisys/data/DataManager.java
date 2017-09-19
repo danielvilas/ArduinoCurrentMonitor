@@ -1,5 +1,6 @@
 package es.daniel.somanalisys.data;
 
+import es.daniel.datalogger.data.DataReader;
 import es.daniel.datalogger.data.LogData;
 import es.daniel.datalogger.data.LogPacket;
 import org.encog.ml.data.MLDataPair;

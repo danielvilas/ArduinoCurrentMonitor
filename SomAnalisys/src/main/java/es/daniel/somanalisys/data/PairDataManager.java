@@ -8,6 +8,7 @@ import java.util.Date;
 
 
 public class PairDataManager extends DataManager<BasicMLDataPair> {
+
     protected BasicMLDataPair buildData(double[] in, TimeClasifier type, String file, Date time) {
         //return null;
 
