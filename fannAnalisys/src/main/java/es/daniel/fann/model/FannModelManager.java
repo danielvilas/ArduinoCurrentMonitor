@@ -23,6 +23,8 @@ public class FannModelManager extends ModelManager<BasicNetwork,FannDataManager>
     Trainer trainer;
     File tmpFileTrain;
     File tmpFileTest;
+    boolean training;
+
     protected BasicNetwork createNetwork() {
         List<Layer> layers = new ArrayList<Layer>();
         layers.add(Layer.create(5));
@@ -92,7 +94,9 @@ public class FannModelManager extends ModelManager<BasicNetwork,FannDataManager>
         if(cb!=null)cb.iterationEvent(this,iteration);
         do {
             int actual = Math.min(2000, remain);
+            training=true;
             float mse = trainer.train(tmpFileTrain.getPath(), actual, 100, desiredError);
+            training=false;
             iteration+=actual;
             remain-=actual;
             if(cb!=null)cb.iterationEvent(this,iteration);
@@ -108,6 +112,7 @@ public class FannModelManager extends ModelManager<BasicNetwork,FannDataManager>
 
         System.out.println("i6" + " " + network.getNumInputNeurons());
         System.out.println("o4" + " " + network.getNumOutputNeurons());
+        network.save("net_"+iteration+".net");
     }
 
 
@@ -136,5 +141,9 @@ public class FannModelManager extends ModelManager<BasicNetwork,FannDataManager>
             ret[3] = res[3];
         }
         return ret;
+    }
+
+    public boolean isTraining() {
+        return training;
     }
 }

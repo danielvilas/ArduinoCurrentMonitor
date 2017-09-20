@@ -3,6 +3,7 @@ package es.daniel.fann.gui;
 import es.daniel.fann.data.Appliance;
 import es.daniel.fann.data.CustomMLDataPair;
 import es.daniel.fann.data.DataManager;
+import es.daniel.fann.model.FannModelManager;
 import es.daniel.fann.model.ModelManager;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.MLDataPair;
@@ -35,8 +36,6 @@ public class TimePanelContinous extends JPanel {
         for(Appliance app:Appliance.values()){
             outColors[app.getPosition()]=app.getColor();
         }
-        this.setDoubleBuffered(true);
-        this.setIgnoreRepaint(true);
     }
 
     private int convertColor(double d)

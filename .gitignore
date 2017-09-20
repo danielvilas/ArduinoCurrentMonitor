@@ -32,3 +32,5 @@ SomAnalisys/\.idea/
 \.idea/
 
 *.mat
+
+SomAnalisys/target/
