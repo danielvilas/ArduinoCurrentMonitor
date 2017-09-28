@@ -1,4 +1,4 @@
-package es.daniel.fann.data;
+package es.daniel.datalogger.data;
 
 import java.awt.*;
 
