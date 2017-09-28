@@ -4,7 +4,7 @@ import com.googlecode.fannj.ActivationFunction;
 import com.googlecode.fannj.Fann;
 import com.googlecode.fannj.Layer;
 import com.googlecode.fannj.Trainer;
-import es.daniel.fann.data.Appliance;
+import es.daniel.datalogger.data.Appliance;
 import es.daniel.fann.data.FannDataManager;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.MLDataPair;

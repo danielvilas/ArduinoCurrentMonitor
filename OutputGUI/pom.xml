@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>Paper1</artifactId>
+        <groupId>es.daniel</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>OutputGUI</artifactId>
+    <dependencies>
+
+        <dependency>
+            <groupId>es.daniel</groupId>
+            <artifactId>datalogger</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.19</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.wendykierp</groupId>
+            <artifactId>JTransforms</artifactId>
+            <version>3.1</version>
+            <classifier>with-dependencies</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.fannj</groupId>
+            <artifactId>fannj-Win64</artifactId>
+            <version>0.8-SNAPSHOT</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+
+        <!--use the DataManager to read Data-->
+        <!-- TODO create separated CMDLine, GUI, and Receiver-->
+        <!--<dependency>
+            <groupId>es.daniel</groupId>
+            <artifactId>fannAnalisys</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
+
+    </dependencies>
+
+</project>

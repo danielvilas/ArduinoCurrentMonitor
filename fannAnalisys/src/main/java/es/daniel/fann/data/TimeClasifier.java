@@ -1,8 +1,10 @@
 package es.daniel.fann.data;
 
+import es.daniel.datalogger.data.Appliance;
+
 import java.util.Arrays;
 
-import static es.daniel.fann.data.Appliance.*;
+import static es.daniel.datalogger.data.Appliance.*;
 
 public enum TimeClasifier {
 

@@ -1,7 +1,7 @@
 package es.daniel.fann.gui;
 
-import es.daniel.fann.data.Appliance;
-import es.daniel.fann.data.CustomMLDataPair;
+
+import es.daniel.datalogger.data.Appliance;
 import es.daniel.fann.data.DataManager;
 import es.daniel.fann.model.FannModelManager;
 import es.daniel.fann.model.ModelManager;

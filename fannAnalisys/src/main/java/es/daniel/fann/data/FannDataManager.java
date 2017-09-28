@@ -1,5 +1,6 @@
 package es.daniel.fann.data;
 
+import es.daniel.datalogger.data.Appliance;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.ml.data.basic.BasicMLDataPair;
 

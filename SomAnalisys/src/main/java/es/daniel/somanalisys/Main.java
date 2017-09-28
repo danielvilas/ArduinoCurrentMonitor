@@ -34,10 +34,10 @@ public class Main{
     }
 
     public static void main(String args[]) throws Exception{
-        //BasicAnalisysFrame frame = new BasicAnalisysFrame();
+        BasicAnalisysFrame frame = new BasicAnalisysFrame();
         //BasicTimeLineFrame frame = new BasicTimeLineFrame();
         //MlpTimeLineFrame frame = new  MlpTimeLineFrame();
-        FannTimeLineFrame frame = new FannTimeLineFrame();
+        //FannTimeLineFrame frame = new FannTimeLineFrame();
         frame.setVisible(true);
         //run();
         //runFann();
