@@ -39,7 +39,7 @@ public class DataManager {
 
             addPacket(p);
         }
-
+        System.out.println("Readed: "+file);
     }
 
     public void addPacket(ParsedPacket p) {

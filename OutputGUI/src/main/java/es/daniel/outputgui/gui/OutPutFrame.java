@@ -1,56 +1,43 @@
 package es.daniel.outputgui.gui;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 
-import es.daniel.outputgui.data.Bucket;
 import es.daniel.outputgui.data.DataManagerListener;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.SymbolAxis;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYBarRenderer;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.time.Millisecond;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.xy.IntervalXYDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYIntervalSeries;
-import org.jfree.data.xy.XYIntervalSeriesCollection;
 
 import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
-public class OutPutFrame extends JFrame implements DataManagerListener {
+public class OutPutFrame extends JFrame{
+    ProtocolFrame kafka;
+    ProtocolFrame mqtt;
 
-    DetectedPanel detectedPanel;
-    TimeDetectedPanel timeDetectedPanel;
+    ProtocolFrame rest;
 
     public OutPutFrame() throws HeadlessException {
         super("Appliances");
-        detectedPanel = new DetectedPanel();
-        timeDetectedPanel= new TimeDetectedPanel();
+        kafka=new ProtocolFrame("Kafka");
+        mqtt=new ProtocolFrame("MQTT");
+        rest= new ProtocolFrame("Rest");
 
-        GridLayout layout=new GridLayout(2,1);
+        GridLayout layout=new GridLayout(1,3);
 
         getContentPane().setLayout(layout);
-        getContentPane().add(detectedPanel);
-        getContentPane().add(timeDetectedPanel);
+        getContentPane().add(kafka);
+        getContentPane().add(mqtt);
+        getContentPane().add(rest);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 
+    public DataManagerListener getKafkaReceiver() {
+        return kafka;
+    }
 
-    public void addOrUpdateBucket(Bucket bucket) {
-        detectedPanel.addData(bucket);
-        timeDetectedPanel.addData(bucket);
+    public DataManagerListener getMqttReceiver() {
+        return mqtt;
+    }
+
+    public DataManagerListener getRestReceiver() {
+        return rest;
     }
 }

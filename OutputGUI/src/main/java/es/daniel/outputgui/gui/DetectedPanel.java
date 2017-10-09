@@ -88,4 +88,11 @@ public class DetectedPanel extends JPanel {
         ChartUtilities.applyCurrentTheme(localJFreeChart);
         return localJFreeChart;
     }
+
+    public void clearAllData() {
+        tvSeries.clear();
+        bluRaySeries.clear();
+        appleTvSeries.clear();
+        ipTvSeries.clear();
+    }
 }

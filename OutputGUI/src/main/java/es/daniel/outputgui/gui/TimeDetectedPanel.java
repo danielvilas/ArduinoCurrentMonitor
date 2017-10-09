@@ -73,4 +73,11 @@ public class TimeDetectedPanel extends JPanel {
         }
         return ((JFreeChart)localJFreeChart);
     }
+
+    public void clearAllData() {
+        tvSeries.clear();
+        bluRaySeries.clear();
+        appleTvSeries.clear();
+        ipTvSeries.clear();
+    }
 }

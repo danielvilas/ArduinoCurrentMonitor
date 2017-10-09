@@ -1,5 +1,7 @@
 package es.daniel.outputgui.data;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.Date;
 
 public class Bucket implements Comparable<Bucket> {
@@ -83,5 +85,20 @@ public class Bucket implements Comparable<Bucket> {
     @Override
     public String toString() {
         return  "Bucket@" + Integer.toHexString(hashCode())+": "+start.toString();
+    }
+
+
+    public String toJsonString() throws Exception {
+        /*return "{" +
+                "\n\tstart:" + start +
+                ",\n\tend:" + end +
+                ",\n\ttvSeconds:" + tvSeconds +
+                ",\n\tbluraySeconds:" + bluraySeconds +
+                ",\n\tappleTvSeconds:" + appleTvSeconds +
+                ",\n\tipTvSeconds:" + ipTvSeconds +
+                "\n}";*/
+
+        ObjectMapper om= new ObjectMapper();
+        return om.writeValueAsString(this);
     }
 }
