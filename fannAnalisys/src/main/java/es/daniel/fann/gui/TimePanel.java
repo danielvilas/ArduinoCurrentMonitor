@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
 
+@SuppressWarnings("deprecation")
 public class TimePanel extends JPanel {
 
     public static final int CELL_HEIGH = 10;

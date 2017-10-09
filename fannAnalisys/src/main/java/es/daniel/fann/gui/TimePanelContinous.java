@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
 
+@SuppressWarnings("ALL")
 public class TimePanelContinous extends JPanel {
 
     public static final int CELL_HEIGH = 10;
