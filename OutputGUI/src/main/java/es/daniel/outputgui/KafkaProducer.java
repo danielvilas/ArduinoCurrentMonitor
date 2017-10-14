@@ -36,6 +36,6 @@ public class KafkaProducer implements Runnable{
             e.printStackTrace();
         }
 
-        //List<Bucket> lista = dataMgr.getAllBuckets();
+        //List<ExtendedBucket> lista = dataMgr.getAllBuckets();
     }
 }

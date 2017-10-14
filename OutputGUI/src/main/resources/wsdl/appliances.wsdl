@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://daniel.es/outputgui/data" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://daniel.es/outputgui/data" targetNamespace="http://daniel.es/outputgui/data">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://daniel.es/outputgui/data">
+
+
+    <xs:element name="AddBucketRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bucket" type="tns:Bucket"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="AddBucketResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bucket" type="tns:Bucket"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetBucketsRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetBucketsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="buckets" type="tns:ListOfBucket"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="DebugBucketsRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DebugBucketsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="buckets" type="tns:ListOfBucket"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+
+    <xs:complexType name="Bucket">
+        <xs:sequence>
+            <xs:element name="start" type="xs:dateTime"/>
+            <xs:element name="end" type="xs:dateTime"/>
+            <xs:element name="tvSeconds" type="xs:float"/>
+            <xs:element name="bluraySeconds" type="xs:float"/>
+            <xs:element name="appleTvSeconds" type="xs:float"/>
+            <xs:element name="ipTvSeconds" type="xs:float"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="ListOfBucket">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="bucket" type="tns:Bucket"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="AddBucketResponse">
+    <wsdl:part element="tns:AddBucketResponse" name="AddBucketResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DebugBucketsRequest">
+    <wsdl:part element="tns:DebugBucketsRequest" name="DebugBucketsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBucketsRequest">
+    <wsdl:part element="tns:GetBucketsRequest" name="GetBucketsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddBucketRequest">
+    <wsdl:part element="tns:AddBucketRequest" name="AddBucketRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBucketsResponse">
+    <wsdl:part element="tns:GetBucketsResponse" name="GetBucketsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DebugBucketsResponse">
+    <wsdl:part element="tns:DebugBucketsResponse" name="DebugBucketsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AppliancesPort">
+    <wsdl:operation name="AddBucket">
+      <wsdl:input message="tns:AddBucketRequest" name="AddBucketRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:AddBucketResponse" name="AddBucketResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DebugBuckets">
+      <wsdl:input message="tns:DebugBucketsRequest" name="DebugBucketsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:DebugBucketsResponse" name="DebugBucketsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBuckets">
+      <wsdl:input message="tns:GetBucketsRequest" name="GetBucketsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:GetBucketsResponse" name="GetBucketsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AppliancesPortSoap11" type="tns:AppliancesPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="AddBucket">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="AddBucketRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="AddBucketResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DebugBuckets">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="DebugBucketsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DebugBucketsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBuckets">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="GetBucketsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetBucketsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AppliancesPortService">
+    <wsdl:port binding="tns:AppliancesPortSoap11" name="AppliancesPortSoap11">
+      <soap:address location="http://localhost:8080/ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

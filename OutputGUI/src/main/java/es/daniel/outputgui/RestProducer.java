@@ -35,6 +35,6 @@ public class RestProducer implements Runnable{
         }
         System.exit(0);
 
-        //List<Bucket> lista = dataMgr.getAllBuckets();
+        //List<ExtendedBucket> lista = dataMgr.getAllBuckets();
     }
 }

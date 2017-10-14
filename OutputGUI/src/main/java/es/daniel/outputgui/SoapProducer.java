@@ -1,23 +1,22 @@
 package es.daniel.outputgui;
 
 import es.daniel.outputgui.data.DataManager;
-import es.daniel.outputgui.protocols.KafkaDataProducer;
-import es.daniel.outputgui.protocols.MqttDataProducer;
+import es.daniel.outputgui.protocols.RestDataProducer;
+import es.daniel.outputgui.protocols.SoapDataProducer;
 
-public class MqttProducer implements Runnable{
+public class SoapProducer implements Runnable{
     DataManager dataMgr;
 
-    MqttProducer() throws  Exception{
+    SoapProducer() throws  Exception{
         dataMgr = new DataManager();
 
-        MqttDataProducer mqttDataProducer= new MqttDataProducer();
+        SoapDataProducer mqttDataProducer= new SoapDataProducer();
 
         dataMgr.setListener(mqttDataProducer);
-
     }
 
     public static void main(String... args) throws  Exception {
-        MqttProducer main = new MqttProducer();
+        SoapProducer main = new SoapProducer();
         new Thread(main).start();
     }
 

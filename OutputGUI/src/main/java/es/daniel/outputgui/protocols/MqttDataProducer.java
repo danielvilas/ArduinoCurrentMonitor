@@ -1,10 +1,7 @@
 package es.daniel.outputgui.protocols;
 
-import es.daniel.outputgui.data.Bucket;
+import es.daniel.outputgui.data.ExtendedBucket;
 import es.daniel.outputgui.data.DataManagerListener;
-import org.apache.kafka.clients.producer.Callback;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -17,7 +14,7 @@ public class MqttDataProducer implements DataManagerListener {
         client.connect();
     }
 
-    public void addOrUpdateBucket(Bucket bucket) {
+    public void addOrUpdateBucket(ExtendedBucket bucket) {
         try {
             String str = bucket.toJsonString();
             MqttMessage message = new MqttMessage();

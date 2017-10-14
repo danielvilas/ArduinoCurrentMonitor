@@ -12,7 +12,7 @@ import java.util.*;
 public class DataManager {
     public static final double THRESOLD = 0.75;
     List<ParsedPacket> allPackets;
-    Map<Date, Bucket> allBuckets;
+    Map<Date, ExtendedBucket> allBuckets;
     Fann network;
     DataManagerListener listener;
 
@@ -20,7 +20,7 @@ public class DataManager {
 
     public DataManager() {
         allPackets = new ArrayList<ParsedPacket>();
-        allBuckets = new HashMap<Date, Bucket>();
+        allBuckets = new HashMap<Date, ExtendedBucket>();
         network = new Fann("net_16000.net");
     }
 
@@ -45,7 +45,7 @@ public class DataManager {
     public void addPacket(ParsedPacket p) {
         Date tmp = p.getDate();
         allPackets.add(p);
-        Bucket b =getOrCreateBucket(tmp);
+        ExtendedBucket b =getOrCreateBucket(tmp);
 
         //Each Packet represent 1 second,
         b.appendTvSeconds(getSeconds(p.getTv()));
@@ -56,7 +56,7 @@ public class DataManager {
         if(listener!=null)listener.addOrUpdateBucket(b);
     }
 
-    private Bucket getOrCreateBucket(Date tmp) {
+    private ExtendedBucket getOrCreateBucket(Date tmp) {
         long milliseconds = tmp.getTime();
         long bucketNum = milliseconds/ (1000 * 60 * BUCKET_SIZE_MINUTES );
         Date bucketDate = new Date(bucketNum*BUCKET_SIZE_MINUTES*60*1000);
@@ -64,7 +64,7 @@ public class DataManager {
             return allBuckets.get(bucketDate);
         }
         Date bucketDateEnd = new Date((1+bucketNum)*BUCKET_SIZE_MINUTES*60*1000);
-        Bucket b = new Bucket(bucketDate,bucketDateEnd);
+        ExtendedBucket b = new ExtendedBucket(bucketDate,bucketDateEnd);
         allBuckets.put(bucketDate,b);
         return b;
     }
@@ -154,8 +154,8 @@ public class DataManager {
         return ret;
     }
 
-    public List<Bucket> getAllBuckets(){
-        ArrayList<Bucket> ret =new ArrayList<Bucket>();
+    public List<ExtendedBucket> getAllBuckets(){
+        ArrayList<ExtendedBucket> ret =new ArrayList<ExtendedBucket>();
         ret.addAll(allBuckets.values());
 
         Collections.sort(ret);

@@ -1,6 +1,6 @@
 package es.daniel.outputgui.gui;
 
-import es.daniel.outputgui.data.Bucket;
+import es.daniel.outputgui.data.ExtendedBucket;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
@@ -49,18 +49,18 @@ public class DetectedPanel extends JPanel {
         return localXYIntervalSeriesCollection;
     }
 
-    public void addData(Bucket bucket){
+    public void addData(ExtendedBucket bucket){
         if(bucket.getTvSeconds()>6) {
-            addItem(tvSeries, bucket.getStart(), bucket.getEnd(), 0);
+            addItem(tvSeries, bucket.getStartDate(), bucket.getEndDate(), 0);
         }
         if(bucket.getBluraySeconds()>6) {
-            addItem(bluRaySeries, bucket.getStart(), bucket.getEnd(), 1);
+            addItem(bluRaySeries, bucket.getStartDate(), bucket.getEndDate(), 1);
         }
         if(bucket.getAppleTvSeconds()>6) {
-            addItem(appleTvSeries, bucket.getStart(), bucket.getEnd(), 2);
+            addItem(appleTvSeries, bucket.getStartDate(), bucket.getEndDate(), 2);
         }
         if(bucket.getIpTvSeconds()>6) {
-            addItem(ipTvSeries, bucket.getStart(), bucket.getEnd(), 3);
+            addItem(ipTvSeries, bucket.getStartDate(), bucket.getEndDate(), 3);
         }
     }
 

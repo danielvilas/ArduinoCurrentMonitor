@@ -1,10 +1,8 @@
 package es.daniel.outputgui.protocols;
 
-import es.daniel.outputgui.data.Bucket;
+import es.daniel.outputgui.data.ExtendedBucket;
 import es.daniel.outputgui.data.DataManagerListener;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 public class RestDataConsumer implements Runnable {
     private DataManagerListener out;
@@ -15,9 +13,9 @@ public class RestDataConsumer implements Runnable {
         try {
             while (running) {
                 RestTemplate restTemplate = new RestTemplate();
-                Bucket[] list = restTemplate.getForObject("http://localhost:8080/api/getBuckets", Bucket[].class);
+                ExtendedBucket[] list = restTemplate.getForObject("http://localhost:8080/api/getBuckets", ExtendedBucket[].class);
                 if (list != null && list.length > 0) {
-                    for (Bucket b : list) {
+                    for (ExtendedBucket b : list) {
                         out.addOrUpdateBucket(b);
                     }
                 } else {

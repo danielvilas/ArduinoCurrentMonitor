@@ -1,13 +1,11 @@
 package es.daniel.outputgui.protocols;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import es.daniel.outputgui.data.Bucket;
+import es.daniel.outputgui.data.ExtendedBucket;
 import es.daniel.outputgui.data.DataManagerListener;
 import org.apache.kafka.clients.consumer.*;
-import org.apache.kafka.common.TopicPartition;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 public class KafkaDataConsumer implements Runnable {
     private DataManagerListener out;
@@ -27,7 +25,7 @@ public class KafkaDataConsumer implements Runnable {
                     System.out.println(record.offset() + ": " + record.value());
                     ObjectMapper om = new ObjectMapper();
                     try {
-                        Bucket b = om.readValue(record.value(), Bucket.class);
+                        ExtendedBucket b = om.readValue(record.value(), ExtendedBucket.class);
                         out.addOrUpdateBucket(b);
                     }catch (Exception e){
                         e.printStackTrace();

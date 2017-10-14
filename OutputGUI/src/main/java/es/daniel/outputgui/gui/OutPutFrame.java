@@ -11,20 +11,29 @@ public class OutPutFrame extends JFrame{
     ProtocolFrame mqtt;
 
     ProtocolFrame rest;
+    ProtocolFrame soap;
 
     public OutPutFrame() throws HeadlessException {
         super("Appliances");
         kafka=new ProtocolFrame("Kafka");
         mqtt=new ProtocolFrame("MQTT");
         rest= new ProtocolFrame("Rest");
+        soap=new ProtocolFrame("SOAP");
 
-        GridLayout layout=new GridLayout(1,3);
+        GridLayout layout=new GridLayout(1,4);
 
-        getContentPane().setLayout(layout);
-        getContentPane().add(kafka);
-        getContentPane().add(mqtt);
-        getContentPane().add(rest);
 
+
+        JPanel pane = new JPanel();
+        pane.setLayout(layout);
+       // getContentPane().setLayout(layout);
+        pane.add(kafka);
+        pane.add(mqtt);
+        pane.add(rest);
+        pane.add(soap);
+
+        JScrollPane scroll = new JScrollPane(pane);
+        getContentPane().add(scroll);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
@@ -39,5 +48,9 @@ public class OutPutFrame extends JFrame{
 
     public DataManagerListener getRestReceiver() {
         return rest;
+    }
+
+    public DataManagerListener getSoapReceiver(){
+        return soap;
     }
 }

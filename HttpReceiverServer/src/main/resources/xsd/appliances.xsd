@@ -1,0 +1,71 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://daniel.es/outputgui/data"
+           targetNamespace="http://daniel.es/outputgui/data" elementFormDefault="qualified">
+
+
+    <xs:element name="AddBucketRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bucket" type="tns:Bucket"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="AddBucketResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bucket" type="tns:Bucket"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetBucketsRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetBucketsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="buckets" type="tns:ListOfBucket"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="DebugBucketsRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DebugBucketsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="buckets" type="tns:ListOfBucket"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+
+    <xs:complexType name="Bucket">
+        <xs:sequence>
+            <xs:element name="start" type="xs:dateTime"/>
+            <xs:element name="end" type="xs:dateTime"/>
+            <xs:element name="tvSeconds" type="xs:float"/>
+            <xs:element name="bluraySeconds" type="xs:float"/>
+            <xs:element name="appleTvSeconds" type="xs:float"/>
+            <xs:element name="ipTvSeconds" type="xs:float"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="ListOfBucket">
+        <xs:sequence>
+            <xs:element name="bucket" type="tns:Bucket" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

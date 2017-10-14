@@ -1,6 +1,6 @@
 package es.daniel.outputgui.gui;
 
-import es.daniel.outputgui.data.Bucket;
+import es.daniel.outputgui.data.ExtendedBucket;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -14,7 +14,6 @@ import org.jfree.data.xy.XYDataset;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class TimeDetectedPanel extends JPanel {
     TimeSeriesCollection localTimeSeriesCollection = new TimeSeriesCollection();
@@ -50,11 +49,11 @@ public class TimeDetectedPanel extends JPanel {
         return localTimeSeriesCollection;
     }
 
-    public void addData(Bucket b) {
-        tvSeries.addOrUpdate(new Millisecond(b.getStart()),b.getTvSeconds());
-        bluRaySeries.addOrUpdate(new Millisecond(b.getStart()),b.getBluraySeconds());
-        appleTvSeries.addOrUpdate(new Millisecond(b.getStart()),b.getAppleTvSeconds());
-        ipTvSeries.addOrUpdate(new Millisecond(b.getStart()),b.getIpTvSeconds());
+    public void addData(ExtendedBucket b) {
+        tvSeries.addOrUpdate(new Millisecond(b.getStartDate()),b.getTvSeconds());
+        bluRaySeries.addOrUpdate(new Millisecond(b.getStartDate()),b.getBluraySeconds());
+        appleTvSeries.addOrUpdate(new Millisecond(b.getStartDate()),b.getAppleTvSeconds());
+        ipTvSeries.addOrUpdate(new Millisecond(b.getStartDate()),b.getIpTvSeconds());
     }
 
     private JFreeChart createChart(XYDataset paramXYDataset)

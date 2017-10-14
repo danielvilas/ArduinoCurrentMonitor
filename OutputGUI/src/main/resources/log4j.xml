@@ -16,4 +16,11 @@
     </root>
     <logger name="log4j.logger.org.springframework.web.client" additivity="false" > <level value="DEBUG" /> <appender-ref ref="console"/> </logger>
 
+    <!-- Spring Webservice XML -->
+    <logger name="org.springframework.ws.client.MessageTracing">
+        <level value="TRACE"/>
+    </logger>
+    <logger name="org.springframework.ws.server.MessageTracing">
+        <level value="TRACE"/>
+    </logger>
 </log4j:configuration>

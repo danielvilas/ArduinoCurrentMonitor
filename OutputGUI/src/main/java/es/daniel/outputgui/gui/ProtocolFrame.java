@@ -1,8 +1,7 @@
 package es.daniel.outputgui.gui;
 
-import es.daniel.outputgui.data.Bucket;
+import es.daniel.outputgui.data.ExtendedBucket;
 import es.daniel.outputgui.data.DataManagerListener;
-import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,7 +54,7 @@ public class ProtocolFrame extends JPanel  implements DataManagerListener {
         });
     }
 
-    public void addOrUpdateBucket(Bucket bucket) {
+    public void addOrUpdateBucket(ExtendedBucket bucket) {
         detectedPanel.addData(bucket);
         timeDetectedPanel.addData(bucket);
     }

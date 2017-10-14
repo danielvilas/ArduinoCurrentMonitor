@@ -1,7 +1,7 @@
 package es.daniel.outputgui.protocols;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import es.daniel.outputgui.data.Bucket;
+import es.daniel.outputgui.data.ExtendedBucket;
 import es.daniel.outputgui.data.DataManagerListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -36,7 +36,7 @@ public class MqttDataConsumer implements MqttCallback {
         System.out.println(s + ": " + str);
         ObjectMapper om = new ObjectMapper();
         try {
-            Bucket b = om.readValue(str, Bucket.class);
+            ExtendedBucket b = om.readValue(str, ExtendedBucket.class);
             out.addOrUpdateBucket(b);
         }catch (Exception e){
             e.printStackTrace();
