@@ -13,7 +13,7 @@ public class RestDataConsumer implements Runnable {
         try {
             while (running) {
                 RestTemplate restTemplate = new RestTemplate();
-                ExtendedBucket[] list = restTemplate.getForObject("http://localhost:8080/api/getBuckets", ExtendedBucket[].class);
+                ExtendedBucket[] list = restTemplate.getForObject("http://server.local:9090/api/getBuckets", ExtendedBucket[].class);
                 if (list != null && list.length > 0) {
                     for (ExtendedBucket b : list) {
                         out.addOrUpdateBucket(b);

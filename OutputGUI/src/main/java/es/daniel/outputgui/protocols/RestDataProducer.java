@@ -9,7 +9,7 @@ public class RestDataProducer implements DataManagerListener {
     public void addOrUpdateBucket(ExtendedBucket bucket) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.postForLocation("http://localhost:8080/api/addBucket",bucket);
+            restTemplate.postForLocation("http://server.local:9090/api/addBucket",bucket);
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -25,11 +25,13 @@ public class SoapDataProducer extends WebServiceGatewaySupport implements DataMa
         setUnmarshaller(marshaller);
     }
 
+
+
     public void addOrUpdateBucket(ExtendedBucket extendedBucket) {
         AddBucketRequest req = new AddBucketRequest();
         req.setBucket(extendedBucket);
 
-        AddBucketResponse res = (AddBucketResponse) getWebServiceTemplate().marshalSendAndReceive("http://localhost:8080/ws",
+        AddBucketResponse res = (AddBucketResponse) getWebServiceTemplate().marshalSendAndReceive("http://server.local:9090/ws",
                 req, new SoapActionCallback(""));
         //client.addBucket(req);
     }

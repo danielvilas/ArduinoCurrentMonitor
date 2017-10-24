@@ -1,5 +1,6 @@
 package es.daniel.outputgui.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -33,10 +34,11 @@ public class ExtendedBucket extends Bucket implements Comparable<ExtendedBucket>
         this.ipTvSeconds=b.getIpTvSeconds();
     }
 
+    @JsonIgnore
     public Date getStartDate(){
         return start.toGregorianCalendar().getTime();
     }
-
+    @JsonIgnore
     public Date getEndDate(){
         return end.toGregorianCalendar().getTime();
     }

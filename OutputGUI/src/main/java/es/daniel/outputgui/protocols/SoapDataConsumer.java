@@ -24,7 +24,7 @@ public class SoapDataConsumer extends WebServiceGatewaySupport implements Runnab
 
         try {
             while (running) {
-                 GetBucketsResponse res =  (GetBucketsResponse) getWebServiceTemplate().marshalSendAndReceive("http://localhost:8080/ws",
+                 GetBucketsResponse res =  (GetBucketsResponse) getWebServiceTemplate().marshalSendAndReceive("http://server.local:9090/ws",
                         new GetBucketsRequest(), new SoapActionCallback(""));
 
                 List<Bucket> list = res.getBuckets().getBucket();
