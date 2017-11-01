@@ -12,44 +12,44 @@ import java.util.List;
 @Endpoint()
 public class AppliancesSoapController {
 
-    List<Bucket> list;
+    List<Packet> list;
 
     public AppliancesSoapController(){
-        list=new ArrayList<Bucket>();
+        list=new ArrayList<Packet>();
     }
 
     public static final String NAMESPACE_URI = "http://daniel.es/outputgui/data";
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddBucketRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddPacketRequest")
     @ResponsePayload
-    public AddBucketResponse addBubcket(@RequestPayload AddBucketRequest bucket){
+    public AddPacketResponse addBubcket(@RequestPayload AddPacketRequest Packet){
         synchronized (list){
-            list.add(bucket.getBucket());
+            list.add(Packet.getPacket());
         }
-        AddBucketResponse ret = new AddBucketResponse();
-        ret.setBucket(bucket.getBucket());
+        AddPacketResponse ret = new AddPacketResponse();
+        ret.setPacket(Packet.getPacket());
         return ret;
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetBucketsRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetPacketsRequest")
     @ResponsePayload
-    public GetBucketsResponse getAllPendingsBucket(){
-        GetBucketsResponse ret  = new GetBucketsResponse();
+    public GetPacketsResponse getAllPendingsPacket(){
+        GetPacketsResponse ret  = new GetPacketsResponse();
         synchronized (list){
-            ret.setBuckets(new ListOfBucket());
-            ret.getBuckets().getBucket().addAll(list);
+            ret.setPackets(new ListOfPackets());
+            ret.getPackets().getPacket().addAll(list);
             list.clear();
         }
         return ret;
     }
 
-   @PayloadRoot(namespace = NAMESPACE_URI, localPart = "DebugBucketsRequest")
+   @PayloadRoot(namespace = NAMESPACE_URI, localPart = "DebugPacketsRequest")
    @ResponsePayload
-   public DebugBucketsResponse debugBucketList(){
-       DebugBucketsResponse ret = new DebugBucketsResponse();
+   public DebugPacketsResponse debugPacketList(){
+       DebugPacketsResponse ret = new DebugPacketsResponse();
         synchronized (list){
-            ret.getBuckets().getBucket().addAll(list);
+            ret.getPackets().getPacket().addAll(list);
         }
         return ret;
     }

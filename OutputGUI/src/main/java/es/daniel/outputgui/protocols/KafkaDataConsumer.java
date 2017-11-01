@@ -1,14 +1,15 @@
 package es.daniel.outputgui.protocols;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import es.daniel.outputgui.data.BucketManager;
 import es.daniel.outputgui.data.ExtendedBucket;
-import es.daniel.outputgui.data.DataManagerListener;
+import es.daniel.outputgui.data.BucketManagerListener;
+import es.daniel.outputgui.data.ParsedPacket;
 import org.apache.kafka.clients.consumer.*;
 
 import java.util.Arrays;
 
-public class KafkaDataConsumer implements Runnable {
-    private DataManagerListener out;
+public class KafkaDataConsumer extends AbstractConsumer implements Runnable {
     private Consumer<String,String> consumer;
     private boolean running=true;
 
@@ -25,8 +26,8 @@ public class KafkaDataConsumer implements Runnable {
                     System.out.println(record.offset() + ": " + record.value());
                     ObjectMapper om = new ObjectMapper();
                     try {
-                        ExtendedBucket b = om.readValue(record.value(), ExtendedBucket.class);
-                        out.addOrUpdateBucket(b);
+                        ParsedPacket b = om.readValue(record.value(), ParsedPacket.class);
+                        bm.addPacket(b);
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -44,13 +45,7 @@ public class KafkaDataConsumer implements Runnable {
         }
     }
 
-    public DataManagerListener getOut() {
-        return out;
-    }
 
-    public void setOut(DataManagerListener out) {
-        this.out = out;
-    }
 
     public boolean isRunning() {
         return running;

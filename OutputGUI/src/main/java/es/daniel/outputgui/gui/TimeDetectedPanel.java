@@ -50,10 +50,10 @@ public class TimeDetectedPanel extends JPanel {
     }
 
     public void addData(ExtendedBucket b) {
-        tvSeries.addOrUpdate(new Millisecond(b.getStartDate()),b.getTvSeconds());
-        bluRaySeries.addOrUpdate(new Millisecond(b.getStartDate()),b.getBluraySeconds());
-        appleTvSeries.addOrUpdate(new Millisecond(b.getStartDate()),b.getAppleTvSeconds());
-        ipTvSeries.addOrUpdate(new Millisecond(b.getStartDate()),b.getIpTvSeconds());
+        tvSeries.addOrUpdate(new Millisecond(b.getStart()),b.getTvSeconds());
+        bluRaySeries.addOrUpdate(new Millisecond(b.getStart()),b.getBluraySeconds());
+        appleTvSeries.addOrUpdate(new Millisecond(b.getStart()),b.getAppleTvSeconds());
+        ipTvSeries.addOrUpdate(new Millisecond(b.getStart()),b.getIpTvSeconds());
     }
 
     private JFreeChart createChart(XYDataset paramXYDataset)

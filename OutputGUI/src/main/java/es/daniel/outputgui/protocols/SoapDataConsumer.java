@@ -5,12 +5,14 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
 
-import javax.xml.ws.BindingProvider;
 import java.util.List;
 
 public class SoapDataConsumer extends WebServiceGatewaySupport implements Runnable{
-    private DataManagerListener out;
+    private BucketManagerListener out;
     private boolean running=true;
+
+    private static final String URI = "http://server.local:9090/ws";
+    //private static final String URI = "http://localhost:8080/ws";
 
     public SoapDataConsumer(){
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
@@ -24,15 +26,14 @@ public class SoapDataConsumer extends WebServiceGatewaySupport implements Runnab
 
         try {
             while (running) {
-                 GetBucketsResponse res =  (GetBucketsResponse) getWebServiceTemplate().marshalSendAndReceive("http://server.local:9090/ws",
-                        new GetBucketsRequest(), new SoapActionCallback(""));
+                 GetPacketsResponse res =  (GetPacketsResponse) getWebServiceTemplate().marshalSendAndReceive(URI,
+                        new GetPacketsRequest(), new SoapActionCallback(""));
 
-                List<Bucket> list = res.getBuckets().getBucket();
+                List<Packet> list = res.getPackets().getPacket();
 
                 if (list != null && list.size() > 0) {
-                    for (Bucket b : list) {
-
-                        out.addOrUpdateBucket(new ExtendedBucket(b));
+                    for (Packet b : list) {
+                        bm.addPacket(fromPacket(b));
                     }
                 } else {
                     Thread.sleep(1000);//1sec
@@ -43,12 +44,26 @@ public class SoapDataConsumer extends WebServiceGatewaySupport implements Runnab
         }
     }
 
-    public DataManagerListener getOut() {
-        return out;
+    private ParsedPacket fromPacket(Packet packet){
+        ParsedPacket p = new ParsedPacket();
+
+        p.setAppleTv(packet.getAppleTvSeconds());
+        p.setBluray(packet.getBluraySeconds());
+        p.setDate(packet.getDate().toGregorianCalendar().getTime());
+        p.setIpTv(packet.getIpTvSeconds());
+        p.setTv(packet.getTvSeconds());
+
+        return p;
     }
 
-    public void setOut(DataManagerListener out) {
-        this.out = out;
+    protected  BucketManager bm = new BucketManager();
+
+    public BucketManagerListener getOut() {
+        return bm.getListener();
+    }
+
+    public void setOut(BucketManagerListener out) {
+        bm.setListener(out);
     }
 
     public boolean isRunning() {

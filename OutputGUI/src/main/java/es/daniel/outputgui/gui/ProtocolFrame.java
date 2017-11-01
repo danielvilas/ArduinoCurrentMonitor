@@ -1,14 +1,14 @@
 package es.daniel.outputgui.gui;
 
 import es.daniel.outputgui.data.ExtendedBucket;
-import es.daniel.outputgui.data.DataManagerListener;
+import es.daniel.outputgui.data.BucketManagerListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ProtocolFrame extends JPanel  implements DataManagerListener {
+public class ProtocolFrame extends JPanel  implements BucketManagerListener {
     DetectedPanel detectedPanel;
     TimeDetectedPanel timeDetectedPanel;
 

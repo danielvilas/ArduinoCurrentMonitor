@@ -1,10 +1,7 @@
 package es.daniel.outputgui;
 
 import es.daniel.outputgui.data.DataManager;
-import es.daniel.outputgui.gui.OutPutFrame;
-import es.daniel.outputgui.protocols.KafkaDataConsumer;
-import es.daniel.outputgui.protocols.KafkaDataProducer;
-import org.jfree.ui.RefineryUtilities;
+import es.daniel.outputgui.protocols.KafkaBucketProducer;
 
 public class KafkaProducer implements Runnable{
     DataManager dataMgr;
@@ -12,7 +9,7 @@ public class KafkaProducer implements Runnable{
     KafkaProducer() throws  Exception{
         dataMgr = new DataManager();
 
-        KafkaDataProducer kafkaDataProducer= new KafkaDataProducer();
+        KafkaBucketProducer kafkaDataProducer= new KafkaBucketProducer();
 
         dataMgr.setListener(kafkaDataProducer);
 

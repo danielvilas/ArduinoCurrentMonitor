@@ -1,11 +1,15 @@
 package es.daniel.outputgui.protocols;
 
 import es.daniel.outputgui.data.ExtendedBucket;
-import es.daniel.outputgui.data.DataManagerListener;
+import es.daniel.outputgui.data.BucketManagerListener;
+import es.daniel.outputgui.data.Packet;
+import es.daniel.outputgui.data.ParsedPacket;
 import org.springframework.web.client.RestTemplate;
 
-public class RestDataConsumer implements Runnable {
-    private DataManagerListener out;
+public class RestDataConsumer extends AbstractConsumer implements Runnable {
+    public static final String URL = "http://server.local:9090/api/getPackets";
+    //public static final String URL = "http://localhost:8080/api/getPackets";
+
     private boolean running=true;
 
 
@@ -13,10 +17,10 @@ public class RestDataConsumer implements Runnable {
         try {
             while (running) {
                 RestTemplate restTemplate = new RestTemplate();
-                ExtendedBucket[] list = restTemplate.getForObject("http://server.local:9090/api/getBuckets", ExtendedBucket[].class);
+                Packet[] list = restTemplate.getForObject(URL, Packet[].class);
                 if (list != null && list.length > 0) {
-                    for (ExtendedBucket b : list) {
-                        out.addOrUpdateBucket(b);
+                    for (Packet b : list) {
+                        bm.addPacket(fromPacket(b));
                     }
                 } else {
                     Thread.sleep(1000);//1sec
@@ -27,13 +31,18 @@ public class RestDataConsumer implements Runnable {
         }
     }
 
-    public DataManagerListener getOut() {
-        return out;
+    private ParsedPacket fromPacket(Packet packet){
+        ParsedPacket p = new ParsedPacket();
+
+        p.setAppleTv(packet.getAppleTvSeconds());
+        p.setBluray(packet.getBluraySeconds());
+        p.setDate(packet.getDate().toGregorianCalendar().getTime());
+        p.setIpTv(packet.getIpTvSeconds());
+        p.setTv(packet.getTvSeconds());
+
+        return p;
     }
 
-    public void setOut(DataManagerListener out) {
-        this.out = out;
-    }
 
     public boolean isRunning() {
         return running;

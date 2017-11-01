@@ -1,8 +1,7 @@
 package es.daniel.outputgui;
 
 import es.daniel.outputgui.data.DataManager;
-import es.daniel.outputgui.protocols.RestDataProducer;
-import es.daniel.outputgui.protocols.SoapDataProducer;
+import es.daniel.outputgui.protocols.SoapBucketProducer;
 
 public class SoapProducer implements Runnable{
     DataManager dataMgr;
@@ -10,7 +9,7 @@ public class SoapProducer implements Runnable{
     SoapProducer() throws  Exception{
         dataMgr = new DataManager();
 
-        SoapDataProducer mqttDataProducer= new SoapDataProducer();
+        SoapBucketProducer mqttDataProducer= new SoapBucketProducer();
 
         dataMgr.setListener(mqttDataProducer);
     }

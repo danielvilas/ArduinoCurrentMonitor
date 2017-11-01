@@ -1,8 +1,7 @@
 package es.daniel.outputgui;
 
 import es.daniel.outputgui.data.DataManager;
-import es.daniel.outputgui.protocols.MqttDataProducer;
-import es.daniel.outputgui.protocols.RestDataProducer;
+import es.daniel.outputgui.protocols.RestBucketProducer;
 
 public class RestProducer implements Runnable{
     DataManager dataMgr;
@@ -10,7 +9,7 @@ public class RestProducer implements Runnable{
     RestProducer() throws  Exception{
         dataMgr = new DataManager();
 
-        RestDataProducer mqttDataProducer= new RestDataProducer();
+        RestBucketProducer mqttDataProducer= new RestBucketProducer();
 
         dataMgr.setListener(mqttDataProducer);
 

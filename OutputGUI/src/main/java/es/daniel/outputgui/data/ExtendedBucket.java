@@ -3,44 +3,39 @@ package es.daniel.outputgui.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class ExtendedBucket extends Bucket implements Comparable<ExtendedBucket> {
+public class ExtendedBucket implements Comparable<ExtendedBucket> {
+
+
+    protected Date start;
+    protected Date end;
+    protected float tvSeconds;
+    protected float bluraySeconds;
+    protected float appleTvSeconds;
+    protected float ipTvSeconds;
+
 
     public ExtendedBucket(Date start, Date end) {
-        super();
-        try {
-            this.start = getXmlGregorianCalendarFromDate(start);
-            this.end = getXmlGregorianCalendarFromDate(end);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.start =start;
+        this.end = end;
     }
 
     public ExtendedBucket() {
     }
 
-    public ExtendedBucket(Bucket b){
-        this.start=b.getStart();
-        this.end=b.getEnd();
-
-        this.bluraySeconds=b.getBluraySeconds();
-        this.tvSeconds=b.getTvSeconds();
-        this.appleTvSeconds=b.getAppleTvSeconds();
-        this.ipTvSeconds=b.getIpTvSeconds();
+    public Date getStart(){
+        return start;
     }
 
-    @JsonIgnore
-    public Date getStartDate(){
-        return start.toGregorianCalendar().getTime();
-    }
-    @JsonIgnore
-    public Date getEndDate(){
-        return end.toGregorianCalendar().getTime();
+    public Date getEnd(){
+        return end;
     }
 
     public void appendTvSeconds(float seconds){
@@ -60,7 +55,7 @@ public class ExtendedBucket extends Bucket implements Comparable<ExtendedBucket>
     }
 
     public int compareTo(ExtendedBucket o) {
-        return start.toGregorianCalendar().getTime().compareTo(o.getStart().toGregorianCalendar().getTime());
+        return start.compareTo(o.getStart());
     }
 
     @Override
@@ -83,13 +78,68 @@ public class ExtendedBucket extends Bucket implements Comparable<ExtendedBucket>
         return om.writeValueAsString(this);
     }
 
-    public static XMLGregorianCalendar getXmlGregorianCalendarFromDate(final Date date) throws DatatypeConfigurationException {
-
-        GregorianCalendar calendar = new GregorianCalendar();
-
-        calendar.setTime(date);
-
-        return DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
-
+    /**
+     * Obtiene el valor de la propiedad tvSeconds.
+     *
+     */
+    public float getTvSeconds() {
+        return tvSeconds;
     }
+
+    /**
+     * Define el valor de la propiedad tvSeconds.
+     *
+     */
+    public void setTvSeconds(float value) {
+        this.tvSeconds = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad bluraySeconds.
+     *
+     */
+    public float getBluraySeconds() {
+        return bluraySeconds;
+    }
+
+    /**
+     * Define el valor de la propiedad bluraySeconds.
+     *
+     */
+    public void setBluraySeconds(float value) {
+        this.bluraySeconds = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad appleTvSeconds.
+     *
+     */
+    public float getAppleTvSeconds() {
+        return appleTvSeconds;
+    }
+
+    /**
+     * Define el valor de la propiedad appleTvSeconds.
+     *
+     */
+    public void setAppleTvSeconds(float value) {
+        this.appleTvSeconds = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad ipTvSeconds.
+     *
+     */
+    public float getIpTvSeconds() {
+        return ipTvSeconds;
+    }
+
+    /**
+     * Define el valor de la propiedad ipTvSeconds.
+     *
+     */
+    public void setIpTvSeconds(float value) {
+        this.ipTvSeconds = value;
+    }
+
 }

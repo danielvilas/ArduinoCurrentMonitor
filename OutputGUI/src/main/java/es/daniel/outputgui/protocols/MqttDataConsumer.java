@@ -2,14 +2,14 @@ package es.daniel.outputgui.protocols;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.daniel.outputgui.data.ExtendedBucket;
-import es.daniel.outputgui.data.DataManagerListener;
+import es.daniel.outputgui.data.BucketManagerListener;
+import es.daniel.outputgui.data.ParsedPacket;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-public class MqttDataConsumer implements MqttCallback {
-    private DataManagerListener out;
+public class MqttDataConsumer extends AbstractConsumer implements MqttCallback {
     MqttClient client;
 
     public MqttDataConsumer() throws Exception{
@@ -17,14 +17,6 @@ public class MqttDataConsumer implements MqttCallback {
         client.connect();
         client.setCallback(this);
         client.subscribe("AppliancesBucket");
-    }
-
-    public DataManagerListener getOut() {
-        return out;
-    }
-
-    public void setOut(DataManagerListener out) {
-        this.out = out;
     }
 
     public void connectionLost(Throwable throwable) {
@@ -36,8 +28,8 @@ public class MqttDataConsumer implements MqttCallback {
         System.out.println(s + ": " + str);
         ObjectMapper om = new ObjectMapper();
         try {
-            ExtendedBucket b = om.readValue(str, ExtendedBucket.class);
-            out.addOrUpdateBucket(b);
+            ParsedPacket b = om.readValue(str, ParsedPacket.class);
+            bm.addPacket(b);
         }catch (Exception e){
             e.printStackTrace();
         }

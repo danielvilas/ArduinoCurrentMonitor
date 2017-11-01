@@ -51,16 +51,16 @@ public class DetectedPanel extends JPanel {
 
     public void addData(ExtendedBucket bucket){
         if(bucket.getTvSeconds()>6) {
-            addItem(tvSeries, bucket.getStartDate(), bucket.getEndDate(), 0);
+            addItem(tvSeries, bucket.getStart(), bucket.getEnd(), 0);
         }
         if(bucket.getBluraySeconds()>6) {
-            addItem(bluRaySeries, bucket.getStartDate(), bucket.getEndDate(), 1);
+            addItem(bluRaySeries, bucket.getStart(), bucket.getEnd(), 1);
         }
         if(bucket.getAppleTvSeconds()>6) {
-            addItem(appleTvSeries, bucket.getStartDate(), bucket.getEndDate(), 2);
+            addItem(appleTvSeries, bucket.getStart(), bucket.getEnd(), 2);
         }
         if(bucket.getIpTvSeconds()>6) {
-            addItem(ipTvSeries, bucket.getStartDate(), bucket.getEndDate(), 3);
+            addItem(ipTvSeries, bucket.getStart(), bucket.getEnd(), 3);
         }
     }
 

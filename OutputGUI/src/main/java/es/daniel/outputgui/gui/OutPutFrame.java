@@ -2,7 +2,7 @@ package es.daniel.outputgui.gui;
 
 import javax.swing.*;
 
-import es.daniel.outputgui.data.DataManagerListener;
+import es.daniel.outputgui.data.BucketManagerListener;
 
 import java.awt.*;
 
@@ -38,19 +38,19 @@ public class OutPutFrame extends JFrame{
 
     }
 
-    public DataManagerListener getKafkaReceiver() {
+    public BucketManagerListener getKafkaReceiver() {
         return kafka;
     }
 
-    public DataManagerListener getMqttReceiver() {
+    public BucketManagerListener getMqttReceiver() {
         return mqtt;
     }
 
-    public DataManagerListener getRestReceiver() {
+    public BucketManagerListener getRestReceiver() {
         return rest;
     }
 
-    public DataManagerListener getSoapReceiver(){
+    public BucketManagerListener getSoapReceiver(){
         return soap;
     }
 }

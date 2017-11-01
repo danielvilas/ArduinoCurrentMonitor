@@ -2,58 +2,57 @@
            targetNamespace="http://daniel.es/outputgui/data" elementFormDefault="qualified">
 
 
-    <xs:element name="AddBucketRequest">
+    <xs:element name="AddPacketRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="bucket" type="tns:Bucket"/>
+                <xs:element name="packet" type="tns:Packet"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
 
-    <xs:element name="AddBucketResponse">
+    <xs:element name="AddPacketResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="bucket" type="tns:Bucket"/>
+                <xs:element name="packet" type="tns:Packet"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="GetBucketsRequest">
-        <xs:complexType>
-            <xs:sequence>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="GetBucketsResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="buckets" type="tns:ListOfBucket"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-
-    <xs:element name="DebugBucketsRequest">
+    <xs:element name="GetPacketsRequest">
         <xs:complexType>
             <xs:sequence>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="DebugBucketsResponse">
+    <xs:element name="GetPacketsResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="buckets" type="tns:ListOfBucket"/>
+                <xs:element name="packets" type="tns:ListOfPackets"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="DebugPacketsRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DebugPacketsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="packets" type="tns:ListOfPackets"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
 
 
-    <xs:complexType name="Bucket">
+    <xs:complexType name="Packet">
         <xs:sequence>
-            <xs:element name="start" type="xs:dateTime"/>
-            <xs:element name="end" type="xs:dateTime"/>
+            <xs:element name="date" type="xs:dateTime"/>
             <xs:element name="tvSeconds" type="xs:float"/>
             <xs:element name="bluraySeconds" type="xs:float"/>
             <xs:element name="appleTvSeconds" type="xs:float"/>
@@ -62,9 +61,9 @@
     </xs:complexType>
 
 
-    <xs:complexType name="ListOfBucket">
+    <xs:complexType name="ListOfPackets">
         <xs:sequence>
-            <xs:element name="bucket" type="tns:Bucket" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="packet" type="tns:Packet" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 

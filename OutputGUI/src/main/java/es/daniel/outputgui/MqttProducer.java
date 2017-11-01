@@ -1,8 +1,7 @@
 package es.daniel.outputgui;
 
 import es.daniel.outputgui.data.DataManager;
-import es.daniel.outputgui.protocols.KafkaDataProducer;
-import es.daniel.outputgui.protocols.MqttDataProducer;
+import es.daniel.outputgui.protocols.MqttBucketProducer;
 
 public class MqttProducer implements Runnable{
     DataManager dataMgr;
@@ -10,7 +9,7 @@ public class MqttProducer implements Runnable{
     MqttProducer() throws  Exception{
         dataMgr = new DataManager();
 
-        MqttDataProducer mqttDataProducer= new MqttDataProducer();
+        MqttBucketProducer mqttDataProducer= new MqttBucketProducer();
 
         dataMgr.setListener(mqttDataProducer);
 

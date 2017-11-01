@@ -10,7 +10,7 @@ import org.encog.ml.data.MLDataPair;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.train.BasicTraining;
 import org.encog.neural.networks.BasicNetwork;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,10 +59,11 @@ public class FannModelManager extends ModelManager<BasicNetwork,PairDataManager>
         trainer = new Trainer(network);
         return null;
     }
+    /*
     @Override
     public void train(int iterations){
         throw new NotImplementedException();
-    }
+    }*/
 
     @Override
     public void train(double error, int maxIterations) {

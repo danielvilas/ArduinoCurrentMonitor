@@ -35,3 +35,5 @@ SomAnalisys/\.idea/
 
 SomAnalisys/target/
 **/target/
+
+\.DS_Store
